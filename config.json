@@ -1,0 +1,12 @@
+{
+    "DataSource": {
+        "Csv": {
+            "FilePath": "C:\\Users\\Andre\\Desktop\\Potraga za poslom\\Applications\\Ljubljana\\Indigo Labs\\Interview project\\measurements.csv",
+            "Delimeter": ";",
+            "DateFormat": "2006-01-02T15:04"
+        }
+    },
+    "WebApi": {
+        "Address": "localhost:8080"
+    }
+}

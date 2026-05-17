@@ -6,14 +6,31 @@ import (
 	"IndigoLabs/Domain/Interfaces/DataStore"
 	"IndigoLabs/Infrastructure/DataSource/Csv"
 	"IndigoLabs/Infrastructure/DataStore/Memory"
+	"fmt"
+	"unicode/utf8"
+
+	"github.com/spf13/viper"
 )
 
 func main() {
-	var dataSource DataSource.IDataSource = &Csv.Reader{
-		FilePath:   "C:\\Users\\Andre\\Desktop\\Potraga za poslom\\Applications\\Ljubljana\\Indigo Labs\\Interview project\\measurements.csv",
-		Delimeter:  ';',
-		DateFormat: "2006-01-02T15:04",
+	// Config
+	viper.SetConfigFile("config.json")
+	if err := viper.ReadInConfig(); err != nil {
+		panic(fmt.Errorf("Failed to read the config file: %w", err))
 	}
+
+	// Data source
+	csvDelimeter, _ := utf8.DecodeRuneInString(viper.GetString("DataSource.Csv.Delimeter"))
+	var dataSource DataSource.IDataSource = &Csv.Reader{
+		FilePath:   viper.GetString("DataSource.Csv.FilePath"),
+		Delimeter:  csvDelimeter,
+		DateFormat: viper.GetString("DataSource.Csv.DateFormat"),
+	}
+
+	// Data store
 	var dataStore DataStore.IDataStore = &Memory.Store{}
-	Api.Startup(dataSource, dataStore)
+
+	// Web API
+	webApiAddress := viper.GetString("WebApi.Address")
+	Api.Startup(dataSource, dataStore, webApiAddress)
 }

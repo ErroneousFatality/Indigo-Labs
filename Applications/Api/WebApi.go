@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Startup(dataSource DataSource.IDataSource, dataStore DataStore.IDataStore) {
+func Startup(dataSource DataSource.IDataSource, dataStore DataStore.IDataStore, address string) {
 	cityUsecases := &CityUsecases.CityUsecases{
 		Source: dataSource,
 		Store:  dataStore,
@@ -40,5 +40,5 @@ func Startup(dataSource DataSource.IDataSource, dataStore DataStore.IDataStore) 
 		cityAverages := cityUsecases.GetCityAverages(filter)
 		context.JSON(http.StatusOK, cityAverages)
 	})
-	router.Run("localhost:8080")
+	router.Run(address)
 }
