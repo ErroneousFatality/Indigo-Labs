@@ -2,7 +2,7 @@
 A RESTFul API service for aggregating and displaying city temperature statistics.
 
 ## Configuration
-A `config.json` file exist alongside the runtime. Inside it you can change the settings for the source CSV file (its `FilePath`, `Delimeter` and `DateFormat`) and for the WebApi (`Address`).
+A `config.json` file exists alongside the runtime executable file. Inside it you can change the settings for the source CSV file (its `FilePath`, `Delimeter` and `DateFormat`) and for the WebApi (its `Address`).
 
 ## Usage
 Using the API endpoints, the user can accomplish the following:
