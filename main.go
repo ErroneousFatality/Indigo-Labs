@@ -15,12 +15,20 @@ func main() {
 		Delimeter:  ';',
 		DateFormat: "2006-01-02T15:04",
 	}
-	for result := range reader.ReadStream() {
-		if result.Err != nil {
-			log.Println(result.Err)
-			continue
-		}
-		log.Println(result.Data)
 	var dataStore DataStore.IDataStore = &Memory.Store{}
+	cityUsecases := &CityUsecases.CityUsecases{
+		Source: dataSource,
+		Store:  dataStore,
 	}
+
+	cityUsecases.RecreateData()
+
+	cities := cityUsecases.GetAllCities()
+	log.Println(len(cities))
+
+	city := cityUsecases.GetCity("Ljubljana")
+	log.Println(city)
+
+	cityAverages := cityUsecases.GetCityAverages(0, 25)
+	log.Println(cityAverages)
 }
