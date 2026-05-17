@@ -4,6 +4,7 @@ import (
 	"IndigoLabs/Domain/Entities/Cities"
 	"cmp"
 	"slices"
+	"strings"
 )
 
 type Store struct {
@@ -11,15 +12,20 @@ type Store struct {
 	cityAverages []Cities.CityAverage
 }
 
-func (store *Store) SetCities(cities map[string]*Cities.City) {
-	store.cities = cities
-}
-
-func (store *Store) SetCityAverages(cityAverages []Cities.CityAverage) {
-	slices.SortFunc(cityAverages, func(a, b Cities.CityAverage) int {
+func (store *Store) SetCities(cities []Cities.City) {
+	store.cities = make(map[string]*Cities.City, len(cities))
+	store.cityAverages = make([]Cities.CityAverage, len(cities))
+	for index, city := range cities {
+		keyname := strings.ToUpper(city.Name)
+		store.cities[keyname] = &city
+		store.cityAverages[index] = Cities.CityAverage{
+			Name:           city.Name,
+			CelsiusAverage: city.CelsiusAverage,
+		}
+	}
+	slices.SortFunc(store.cityAverages, func(a, b Cities.CityAverage) int {
 		return cmp.Compare(a.CelsiusAverage, b.CelsiusAverage)
 	})
-	store.cityAverages = cityAverages
 }
 
 func (store *Store) GetCities() map[string]*Cities.City {

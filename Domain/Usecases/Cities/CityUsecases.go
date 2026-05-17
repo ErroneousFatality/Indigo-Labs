@@ -37,26 +37,18 @@ func (this *CityUsecases) RecreateData() {
 		}
 	}
 
-	cities := make(map[string]*Cities.City, len(aggregates))
-	cityAverages := make([]Cities.CityAverage, len(aggregates))
-
+	cities := make([]Cities.City, len(aggregates))
 	i := 0
 	for name, aggregate := range aggregates {
-		keyname := strings.ToUpper(name)
-		cities[keyname] = &Cities.City{
+		cities[i] = Cities.City{
 			Name:           name,
 			CelsiusMin:     aggregate.CelsiusMin,
 			CelsiusMax:     aggregate.CelsiusMax,
 			CelsiusAverage: aggregate.CelsiusAverage,
 		}
-		cityAverages[i] = Cities.CityAverage{
-			Name:           name,
-			CelsiusAverage: aggregate.CelsiusAverage,
-		}
 		i++
 	}
 	this.Store.SetCities(cities)
-	this.Store.SetCityAverages(cityAverages)
 }
 
 func (this *CityUsecases) GetAllCities() []CityResponse {
