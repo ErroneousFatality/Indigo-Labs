@@ -32,7 +32,11 @@ func Startup(dataSource DataSource.IDataSource, dataStore DataStore.IDataStore, 
 	router.GET("/Cities/:name", func(context *gin.Context) {
 		cityName := context.Param("name")
 		city := cityUsecases.GetCity(cityName)
-		context.JSON(http.StatusOK, city)
+		if city == nil {
+			context.JSON(http.StatusNotFound, gin.H{"error": "City not found"})
+		} else {
+			context.JSON(http.StatusOK, city)
+		}
 	})
 	router.GET("/Cities/Averages", func(context *gin.Context) {
 		var filter DataStore.CityAverageFilter
