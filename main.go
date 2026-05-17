@@ -1,7 +1,7 @@
 package main
 
 import (
-	"IndigoLabs/Applications/Console"
+	"IndigoLabs/Applications/Api"
 	"IndigoLabs/Domain/Interfaces/DataSource"
 	"IndigoLabs/Domain/Interfaces/DataStore"
 	"IndigoLabs/Infrastructure/DataSource/Csv"
@@ -15,5 +15,5 @@ func main() {
 		DateFormat: "2006-01-02T15:04",
 	}
 	var dataStore DataStore.IDataStore = &Memory.Store{}
-	Console.Startup(dataSource, dataStore)
+	Api.Startup(dataSource, dataStore)
 }
