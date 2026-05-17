@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndigoLabs - API Documentation</title>
+    <style>
+        body { margin: 0; padding: 0; }
+        #opencollection-container { width: 100vw; height: 100vh; }
+    </style>
+    <link rel="stylesheet" href="https://cdn.opencollection.com/docs.css">
+    <script src="https://cdn.opencollection.com/docs.js"></script>
+</head>
+<body>
+    <div id="opencollection-container"></div>
+    <script>
+        const collectionData = "opencollection: 1.0.0\ninfo:\n  name: IndigoLabs\nconfig:\n  proxy:\n    inherit: true\n    config:\n      protocol: http\n      hostname: ''\n      port: ''\n      auth:\n        username: ''\n        password: ''\n      bypassProxy: ''\nitems:\n  - info:\n      name: Cities\n      type: folder\n      seq: 1\n    request:\n      auth: inherit\n    items:\n      - info:\n          name: Get all\n          type: http\n          seq: 2\n        http:\n          method: GET\n          url: http://localhost:8080/Cities\n          auth: inherit\n        settings:\n          encodeUrl: true\n          timeout: 0\n          followRedirects: true\n          maxRedirects: 5\n      - info:\n          name: Reload data\n          type: http\n          seq: 1\n        http:\n          method: POST\n          url: http://localhost:8080/Cities/ReloadData\n          auth: inherit\n        settings:\n          encodeUrl: true\n          timeout: 0\n          followRedirects: true\n          maxRedirects: 5\n      - info:\n          name: Get single\n          type: http\n          seq: 3\n        http:\n          method: GET\n          url: http://localhost:8080/Cities/:name\n          params:\n            - name: name\n              value: ljubljana\n              type: path\n          auth: inherit\n        settings:\n          encodeUrl: true\n          timeout: 0\n          followRedirects: true\n          maxRedirects: 5\n      - info:\n          name: Get averages\n          type: http\n          seq: 4\n        http:\n          method: GET\n          url: http://localhost:8080/Cities/Averages?Min=-5&Max=21\n          params:\n            - name: Min\n              value: '-5'\n              type: query\n            - name: Max\n              value: '21'\n              type: query\n          auth: inherit\n        settings:\n          encodeUrl: true\n          timeout: 0\n          followRedirects: true\n          maxRedirects: 5\nbundled: true\nextensions:\n  bruno:\n    ignore:\n      - node_modules\n      - .git\n    exportedAt: '2026-05-17T10:25:49.423Z'\n    exportedUsing: Bruno/3.3.0\n";
+        new window.OpenCollection({
+            target: document.getElementById('opencollection-container'),
+            opencollection: collectionData,
+            theme: 'light'
+        });
+    </script>
+</body>
+</html>
