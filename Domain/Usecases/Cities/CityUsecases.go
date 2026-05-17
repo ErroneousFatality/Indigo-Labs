@@ -22,8 +22,8 @@ func (this *CityUsecases) RecreateData() {
 		}
 		measurement := result.Data
 
-		aggregate, ok := aggregates[measurement.City]
-		if ok {
+		aggregate, exists := aggregates[measurement.City]
+		if exists {
 			aggregate.AddMeasurement(measurement.CelsiusAverage)
 		} else {
 			aggregates[measurement.City] = newCityAggregate(measurement.CelsiusAverage)
