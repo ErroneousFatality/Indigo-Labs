@@ -10,11 +10,16 @@ import (
 )
 
 func Startup(dataSource DataSource.IDataSource, dataStore DataStore.IDataStore, address string) {
+	// Usecases
 	cityUsecases := &CityUsecases.CityUsecases{
 		Source: dataSource,
 		Store:  dataStore,
 	}
+
+	// Api
+	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
+
 	router.POST("/Cities/ReloadData", func(context *gin.Context) {
 		cityUsecases.RecreateData()
 		context.Status(http.StatusOK)
