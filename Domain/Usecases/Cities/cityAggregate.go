@@ -5,7 +5,6 @@ type cityAggregate struct {
 	CelsiusMax        float32
 	CelsiusMin        float32
 	CelsiusSum        float64
-	CelsiusAverage    float32
 }
 
 func newCityAggregate(celsius float32) *cityAggregate {
@@ -14,18 +13,20 @@ func newCityAggregate(celsius float32) *cityAggregate {
 		CelsiusMax:        celsius,
 		CelsiusMin:        celsius,
 		CelsiusSum:        float64(celsius),
-		CelsiusAverage:    celsius,
 	}
 }
 
-func (stats *cityAggregate) AddMeasurement(celsius float32) {
-	stats.MeasurementsCount++
-	if celsius > stats.CelsiusMax {
-		stats.CelsiusMax = celsius
+func (city *cityAggregate) AddMeasurement(celsius float32) {
+	city.MeasurementsCount++
+	if celsius > city.CelsiusMax {
+		city.CelsiusMax = celsius
 	}
-	if celsius < stats.CelsiusMin {
-		stats.CelsiusMin = celsius
+	if celsius < city.CelsiusMin {
+		city.CelsiusMin = celsius
 	}
-	stats.CelsiusSum += float64(celsius)
-	stats.CelsiusAverage = float32(stats.CelsiusSum / float64(stats.MeasurementsCount))
+	city.CelsiusSum += float64(celsius)
+}
+
+func (city *cityAggregate) GetCelsiusAverage() float32 {
+	return float32(city.CelsiusSum / float64(city.MeasurementsCount))
 }

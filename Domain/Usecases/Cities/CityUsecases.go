@@ -44,7 +44,7 @@ func (this *CityUsecases) RecreateData() {
 			Name:           name,
 			CelsiusMin:     aggregate.CelsiusMin,
 			CelsiusMax:     aggregate.CelsiusMax,
-			CelsiusAverage: aggregate.CelsiusAverage,
+			CelsiusAverage: aggregate.GetCelsiusAverage(),
 		}
 		i++
 	}
