@@ -16,18 +16,12 @@ type CityUsecases struct {
 func (this *CityUsecases) RecreateData() {
 	aggregates := make(map[string]*cityAggregate)
 
-	j := 0
 	for result := range this.Source.ReadStream() {
 		if result.Err != nil {
 			log.Println(result.Err)
 			continue
 		}
 		measurement := result.Data
-
-		if (j % 1000000) == 0 {
-			log.Printf("Processed %d measurements\n", j)
-		}
-		j++
 
 		aggregate, ok := aggregates[measurement.City]
 		if ok {

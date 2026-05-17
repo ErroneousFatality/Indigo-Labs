@@ -26,7 +26,7 @@ func main() {
 	cities := cityUsecases.GetAllCities()
 	log.Println(len(cities))
 
-	city := cityUsecases.GetCity("Ljubljana")
+	city := cityUsecases.GetCity("ljuBljAna")
 	log.Println(city)
 
 	cityAverages := cityUsecases.GetCityAverages(0, 25)
