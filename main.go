@@ -2,7 +2,10 @@ package main
 
 import (
 	"IndigoLabs/Domain/Interfaces/DataSource"
+	"IndigoLabs/Domain/Interfaces/DataStore"
+	CityUsecases "IndigoLabs/Domain/Usecases/Cities"
 	"IndigoLabs/Infrastructure/DataSource/Csv"
+	"IndigoLabs/Infrastructure/DataStore/Memory"
 	"log"
 )
 
@@ -18,5 +21,6 @@ func main() {
 			continue
 		}
 		log.Println(result.Data)
+	var dataStore DataStore.IDataStore = &Memory.Store{}
 	}
 }
