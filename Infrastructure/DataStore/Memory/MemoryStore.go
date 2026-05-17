@@ -52,11 +52,19 @@ func (store *Store) GetCityAverages(filter DataStore.CityAverageFilter) []Cities
 	if filter.Max == nil {
 		end = len(store.cityAverages)
 	} else {
-		end, _ = slices.BinarySearchFunc(store.cityAverages, *filter.Max, func(city Cities.CityAverage, celsiusAverageMax float32) int {
+		var max float32 = *filter.Max
+		var found bool
+		end, found = slices.BinarySearchFunc(store.cityAverages, max, func(city Cities.CityAverage, celsiusAverageMax float32) int {
 			return cmp.Compare(city.CelsiusAverage, celsiusAverageMax)
 		})
+		if found {
+			end++
+			for end < len(store.cityAverages) && store.cityAverages[end].CelsiusAverage == max {
+				end++
+			}
+		}
 	}
 
-	result := store.cityAverages[start : end+1]
+	result := store.cityAverages[start:end]
 	return result
 }
