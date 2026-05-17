@@ -1,7 +1,7 @@
 package Csv
 
 import (
-	"IndigoLabs/DataSource"
+	"IndigoLabs/Domain/Interfaces/DataSource"
 	"encoding/csv"
 	"fmt"
 	"io"
@@ -10,13 +10,13 @@ import (
 	"time"
 )
 
-type CsvReader struct {
+type Reader struct {
 	FilePath   string
 	Delimeter  rune
 	DateFormat string
 }
 
-func (reader CsvReader) ReadStream() <-chan DataSource.StreamResult {
+func (reader *Reader) ReadStream() <-chan DataSource.StreamResult {
 	return StreamFile(reader.FilePath, reader.Delimeter, reader.DateFormat)
 }
 
@@ -55,9 +55,10 @@ func StreamFile(filePath string, delimeter rune, dateFormat string) <-chan DataS
 			var row []string
 			row, err := csvReader.Read()
 			if err != nil {
-				if err != io.EOF {
-					fail(fmt.Sprintf("Failed to read CSV row #%d", rowNumber), err)
+				if err == io.EOF {
+					break
 				}
+				fail(fmt.Sprintf("Failed to read CSV row #%d", rowNumber), err)
 				continue
 			}
 

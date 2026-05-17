@@ -1,13 +1,13 @@
 package main
 
 import (
-	"IndigoLabs/DataSource"
-	"IndigoLabs/DataSource/Implementations/Csv"
+	"IndigoLabs/Domain/Interfaces/DataSource"
+	"IndigoLabs/Infrastructure/DataSource/Csv"
 	"log"
 )
 
 func main() {
-	var reader DataSource.IDataSource = Csv.CsvReader{
+	var dataSource DataSource.IDataSource = &Csv.Reader{
 		FilePath:   "C:\\Users\\Andre\\Desktop\\Potraga za poslom\\Applications\\Ljubljana\\Indigo Labs\\Interview project\\measurements.csv",
 		Delimeter:  ';',
 		DateFormat: "2006-01-02T15:04",
