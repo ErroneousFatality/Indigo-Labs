@@ -21,7 +21,7 @@ func (reader *Reader) ReadStream() <-chan DataSource.StreamResult {
 }
 
 func StreamFile(filePath string, delimeter rune, dateFormat string) <-chan DataSource.StreamResult {
-	outflow := make(chan DataSource.StreamResult, 10)
+	outflow := make(chan DataSource.StreamResult, 2048)
 	fail := func(message string, err error) {
 		outflow <- DataSource.StreamResult{Err: fmt.Errorf("%s: %w", message, err)}
 	}
