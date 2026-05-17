@@ -5,7 +5,6 @@ import (
 	"IndigoLabs/Domain/Interfaces/DataSource"
 	"IndigoLabs/Domain/Interfaces/DataStore"
 	"log"
-	"strings"
 )
 
 type CityUsecases struct {
@@ -59,9 +58,8 @@ func (this *CityUsecases) GetAllCities() []CityResponse {
 }
 
 func (this *CityUsecases) GetCity(name string) *CityResponse {
-	keyname := strings.ToUpper(name)
-	city, ok := this.Store.GetCity(keyname)
-	if !ok {
+	city, wasFound := this.Store.GetCity(name)
+	if !wasFound {
 		return nil
 	}
 	return toResponsePointer(city)

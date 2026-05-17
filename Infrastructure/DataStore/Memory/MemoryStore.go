@@ -34,8 +34,9 @@ func (store *Store) GetCities() map[string]*Cities.City {
 }
 
 func (store *Store) GetCity(name string) (*Cities.City, bool) {
-	city, ok := store.cities[name]
-	return city, ok
+	keyname := strings.ToUpper(name)
+	city, exists := store.cities[keyname]
+	return city, exists
 }
 
 func (store *Store) GetCityAverages(filter DataStore.CityAverageFilter) []Cities.CityAverage {
