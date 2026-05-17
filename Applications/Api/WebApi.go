@@ -19,6 +19,7 @@ func Startup(dataSource DataSource.IDataSource, dataStore DataStore.IDataStore, 
 	// Api
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
+	router.Use(CORSMiddleware())
 
 	router.POST("/Cities/ReloadData", func(context *gin.Context) {
 		cityUsecases.RecreateData()
