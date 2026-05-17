@@ -7,5 +7,5 @@ type IDataStore interface {
 
 	GetCities() map[string]*Cities.City
 	GetCity(name string) (*Cities.City, bool)
-	GetCityAverages(min, max float32) []Cities.CityAverage
+	GetCityAverages(filter CityAverageFilter) []Cities.CityAverage
 }

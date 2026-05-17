@@ -67,6 +67,6 @@ func (this *CityUsecases) GetCity(name string) *CityResponse {
 	return toResponsePointer(city)
 }
 
-func (this *CityUsecases) GetCityAverages(min float32, max float32) []Cities.CityAverage {
-	return this.Store.GetCityAverages(min, max)
+func (this *CityUsecases) GetCityAverages(filter DataStore.CityAverageFilter) []Cities.CityAverage {
+	return this.Store.GetCityAverages(filter)
 }

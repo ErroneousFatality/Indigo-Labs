@@ -21,6 +21,7 @@ func Startup(dataSource DataSource.IDataSource, dataStore DataStore.IDataStore) 
 	city := cityUsecases.GetCity("ljuBljAna")
 	log.Println(city)
 
-	cityAverages := cityUsecases.GetCityAverages(0, 25)
+	filter := DataStore.NewCityAverageFilter(0, 25)
+	cityAverages := cityUsecases.GetCityAverages(filter)
 	log.Println(cityAverages)
 }

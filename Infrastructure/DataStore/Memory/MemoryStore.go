@@ -2,6 +2,7 @@ package Memory
 
 import (
 	"IndigoLabs/Domain/Entities/Cities"
+	"IndigoLabs/Domain/Interfaces/DataStore"
 	"cmp"
 	"slices"
 	"strings"
@@ -37,13 +38,25 @@ func (store *Store) GetCity(name string) (*Cities.City, bool) {
 	return city, ok
 }
 
-func (store *Store) GetCityAverages(min, max float32) []Cities.CityAverage {
-	start, _ := slices.BinarySearchFunc(store.cityAverages, min, func(city Cities.CityAverage, celsiusAverage float32) int {
-		return cmp.Compare(city.CelsiusAverage, celsiusAverage)
-	})
-	end, _ := slices.BinarySearchFunc(store.cityAverages, max, func(city Cities.CityAverage, celsiusAverage float32) int {
-		return cmp.Compare(city.CelsiusAverage, celsiusAverage)
-	})
-	result := store.cityAverages[start:end]
+func (store *Store) GetCityAverages(filter DataStore.CityAverageFilter) []Cities.CityAverage {
+	var start int
+	if filter.Min == nil {
+		start = 0
+	} else {
+		start, _ = slices.BinarySearchFunc(store.cityAverages, *filter.Min, func(city Cities.CityAverage, celsiusAverageMin float32) int {
+			return cmp.Compare(city.CelsiusAverage, celsiusAverageMin)
+		})
+	}
+
+	var end int
+	if filter.Max == nil {
+		end = len(store.cityAverages)
+	} else {
+		end, _ = slices.BinarySearchFunc(store.cityAverages, *filter.Max, func(city Cities.CityAverage, celsiusAverageMax float32) int {
+			return cmp.Compare(city.CelsiusAverage, celsiusAverageMax)
+		})
+	}
+
+	result := store.cityAverages[start : end+1]
 	return result
 }
